@@ -4,6 +4,7 @@ import OpenAI from "openai";
 
 const app = express();
 const port = process.env.PORT;
+app.use(express.json());
 const openai = new OpenAI({
   apiKey: process.env.API_KEY,
 });
@@ -138,7 +139,8 @@ async function getCompletion(prompt) {
 }
 
 app.post("/gpt", (req, res) => {
-    console.log(req.body);
+  const requestBodyPrompt = req.body.prompt;
+  console.log(requestBodyPrompt)
   //const prompt = context + "<consulta>" + req.body+ "</consulta>";
   /*getCompletion(prompt).then((response) => {
     console.log(response);
