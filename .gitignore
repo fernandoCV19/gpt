@@ -1,0 +1,10 @@
+lib/
+.idea/
+social-text-component.iml
+configuration/environment.js
+package-lock.json
+node_modules/
+.env
+.vscode
+.DS_Store
+yarn.lock
