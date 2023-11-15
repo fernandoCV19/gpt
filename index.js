@@ -14,7 +14,7 @@ const context = `
     - Eres un asistente que guia a los usuarios que tienen dudas acerca del proceso de titulación de la Universidad Mayor de San Simón solamente para las carreras de Ing. en Informática e Ing. de sistemas.
     - El contexto está enmarcado bajo un reglamento de titulación para las mismas carreras.
     - Las solicitudes que debes responder vendrán en formato de pregunta o de consulta delimitados entre las etiquetas <consulta></consulta>
-    - Si la pregunta que te envian no tiene nada que ver exclusivamente con este contexto, debes responder que no conoces la respuesta a la pregunta y que solo eres un asistente del nuevo semáforo
+    - Si la pregunta que te envian no tiene nada que ver exclusivamente con este contexto, debes responder que no conoces la respuesta a la pregunta y que solo eres un asistente.
     - Tus respuestas deben limitarse únicamente a este contexto
     - Tus respuestas deben ser lo mas breves y claras posibles, contestando con un lenguaje entendible para el usuario
     - El reglamento del proceso de titulación presenta los siguientes puntos importantes:
@@ -129,24 +129,18 @@ const context = `
     `;
 
 async function getCompletion(prompt) {
-  console.log(prompt);
   const completion = await openai.chat.completions.create({
     messages: [{ role: "user", content: prompt }],
     model: "gpt-3.5-turbo",
   });
-  console.log(completion.choices);
   return completion;
 }
 
 app.post("/gpt", (req, res) => {
-  const requestBodyPrompt = req.body.prompt;
-  console.log(requestBodyPrompt)
-  //const prompt = context + "<consulta>" + req.body+ "</consulta>";
-  /*getCompletion(prompt).then((response) => {
-    console.log(response);
+  const prompt = context + "<consulta>" + req.body.prompt+ "</consulta>";
+  getCompletion(prompt).then((response) => {
     res.send({ result: response.choices[0].message.content });
-  });*/
-  res.send(null);
+  })
 });
 
 app.listen(port, () => {
